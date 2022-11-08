@@ -39,7 +39,7 @@ namespace Jackett.Common.Indexers
         private const string SearchUrl = "buscar/";
 
         public override string[] AlternativeSiteLinks { get; protected set; } = {
-            "https://dontorrent.moe/",
+            "https://dontorrent.gs/",
             "https://todotorrents.net/",
             "https://tomadivx.net/",
             "https://seriesblanco.one/",
@@ -48,21 +48,21 @@ namespace Jackett.Common.Indexers
         };
 
         public override string[] LegacySiteLinks { get; protected set; } = {
-            "https://dontorrent.wtf/",
-            "https://dontorrent.fi/",
-            "https://dontorrent.ink/",
-            "https://dontorrent.kim/",
-            "https://dontorrent.tw/",
-            "https://dontorrent.yt/",
-            "https://dontorrent.vg/",
-            "https://dontorrent.eu/",
-            "https://dontorrent.ch/",
             "https://dontorrent.vet/",
             "https://dontorrent.dog/",
             "https://dontorrent.dev/",
             "https://dontorrent.bid/",
             "https://dontorrent.pet/",
-            "https://dontorrent.soy/"
+            "https://dontorrent.soy/",
+            "https://dontorrent.moe/",
+            "https://dontorrent.pub/",
+            "https://dontorrent.tf/",
+            "https://dontorrent.vin/",
+            "https://dontorrent.ist/",
+            "https://dontorrent.uno/",
+            "https://dontorrent.fans/",
+            "https://dontorrent.ltd/",
+            "https://dontorrent.me/"
         };
 
         private static Dictionary<string, string> CategoriesMap => new Dictionary<string, string>
@@ -80,7 +80,7 @@ namespace Jackett.Common.Indexers
             : base(id: "dontorrent",
                    name: "DonTorrent",
                    description: "DonTorrent is a SPANISH public tracker for MOVIES / TV / GENERAL",
-                   link: "https://dontorrent.moe/",
+                   link: "https://dontorrent.gs/",
                    caps: new TorznabCapabilities
                    {
                        TvSearchParams = new List<TvSearchParam>

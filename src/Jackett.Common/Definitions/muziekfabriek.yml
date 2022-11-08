@@ -62,8 +62,8 @@ login:
   error:
     - selector: td.embedded:contains("fout")
   test:
-    path: /
-    selector: :has(a[href="logout.php"])
+    path: index.php
+    selector: a[href="logout.php"]
 
 download:
   selectors:

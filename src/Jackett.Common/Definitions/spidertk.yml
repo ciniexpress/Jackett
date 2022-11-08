@@ -57,6 +57,7 @@ caps:
     - {id: 447, cat: Books/Comics, desc: "Livres / Bande Dessinée"}
     - {id: 448, cat: Books/Comics, desc: "Livres / Comic"}
     - {id: 449, cat: Books/Comics, desc: "Livres / Manga"}
+    - {id: 468, cat: Books/Other, desc: "Livres / Divers"}
     - {id: 450, cat: PC/Games, desc: "Logiciels / Jeu PC"}
     - {id: 451, cat: PC/Games, desc: "Logiciels / Jeu Mac"}
     - {id: 452, cat: PC/Games, desc: "Logiciels / Jeu Linux"}
@@ -135,7 +136,7 @@ login:
         selector: td.text
   test:
     path: index.php
-    selector: a[href="logout.php"]
+    selector: a[href*="logout.php"]
 
 search:
   paths:
@@ -165,23 +166,20 @@ search:
       filters:
         - name: querystring
           args: cat
-    title_default:
-      selector: a[href^="details.php?id="]
-    title_optional:
-      optional: true
-      selector: a[title][href^="details.php?id="]
-      attribute: title
     title:
-      text: "{{ if .Result.title_optional }}{{ .Result.title_optional }}{{ else }}{{ .Result.title_default }}{{ end }}"
+      selector: a[href^="details.php?id="]
     details:
       selector: a[href^="details.php?id="]
       attribute: href
     download:
       selector: a[href^="download.php?id="]
       attribute: href
+    poster:
+      selector: img.nexus-lazy-load
+      attribute: data-src
     date_elapsed:
       # time type: time elapsed (default)
-      selector: td:nth-child(4) > span[title]
+      selector: td.rowfollow:nth-child(4) > span[title]
       attribute: title
       optional: true
       filters:
@@ -191,7 +189,7 @@ search:
           args: "2006-01-02 15:04:05 -07:00"
     date_added:
       # time added
-      selector: td:nth-child(4):not(:has(span))
+      selector: td.rowfollow:nth-child(4):not(:has(span))
       optional: true
       filters:
         - name: append
@@ -201,13 +199,13 @@ search:
     date:
       text: "{{ if or .Result.date_elapsed .Result.date_added }}{{ or .Result.date_elapsed .Result.date_added }}{{ else }}now{{ end }}"
     size:
-      selector: td:nth-child(5)
+      selector: td.rowfollow:nth-child(5)
     seeders:
-      selector: td:nth-child(6)
+      selector: td.rowfollow:nth-child(6)
     leechers:
-      selector: td:nth-child(7)
+      selector: td.rowfollow:nth-child(7)
     grabs:
-      selector: td:nth-child(8)
+      selector: td.rowfollow:nth-child(8)
     downloadvolumefactor:
       case:
         img[src="pic/freeleech.png"]: 0
@@ -224,4 +222,4 @@ search:
         "*": 1
     minimumratio:
       text: 0.81
-# NexusPHP Custom 1.7.7 2022-04-30
+# NexusPHP Custom 1.7.24 2022-09-11

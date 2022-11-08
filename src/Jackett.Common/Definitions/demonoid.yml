@@ -12,13 +12,11 @@ links:
   - https://www.dnoid.pw/
   - https://demonoidevmsgasmojajlhikwetsr4pxzw6xkjt3dgdv6nr5yxvsamid.onion.ws/
   - https://demonoidevmsgasmojajlhikwetsr4pxzw6xkjt3dgdv6nr5yxvsamid.onion.pet/
-  - https://demonoid.unblockit.bet/
+  - https://demonoid.unblockit.page/
   - https://demonoid.torrentbay.to/
   - https://demonoid.nocensor.world/
 legacylinks:
   - https://demonoidevmsgasmojajlhikwetsr4pxzw6xkjt3dgdv6nr5yxvsamid.onion.ly/
-  - https://demonoid.unblockit.li/
-  - https://demonoid.unblockit.uno/
   - https://demonoid.unblockit.ch/
   - https://demonoid.nocensor.space/
   - https://demonoid.unblockit.ws/
@@ -35,6 +33,9 @@ legacylinks:
   - https://demonoid.unblockit.name/
   - https://demonoid.nocensor.sbs/
   - https://demonoid.unblockit.ist/
+  - https://demonoid.unblockit.bet/
+  - https://demonoid.unblockit.cat/
+  - https://demonoid.unblockit.nz/
 
 caps:
   categorymappings:
@@ -319,13 +320,20 @@ settings:
 
 login:
   method: cookie
+  inputs:
+    cookie: "{{ .Config.cookie }}"
   test:
     path: files/
 
 download:
-  selectors:
-    - selector: a[href^="/files/download/"]:has(i.fa-download)
-      attribute: href
+  infohash:
+    hash:
+      selector: div:contains("Torrent hash") > div.col-md-5 > div
+      filters:
+        - name: replace
+          args: [" ", ""]
+    title:
+      selector: h1[id="torrent--title"]
 
 search:
   paths:

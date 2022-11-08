@@ -5,6 +5,7 @@ description: "MovieTorrent is a Public site for Bollywood, Hollywood, Hindi Dubb
 language: en-US
 type: public
 encoding: UTF-8
+requestDelay: 2
 links:
   - https://movietorrent.co/
 
@@ -51,7 +52,7 @@ caps:
 
   modes:
     search: [q]
-    tv-search: [q]
+    tv-search: [q, season, ep]
     movie-search: [q]
 
 settings: []
@@ -65,16 +66,10 @@ download:
         - name: regexp
           args: ([A-F|a-f|0-9]{40})
     title:
-      selector: h2
+      selector: th[colspan="5"]
       filters:
         - name: replace
-          args: ["Full Movie ", ""]
-        - name: replace
-          args: ["Torrent Magnet ", ""]
-        - name: replace
-          args: ["Download", ""]
-        - name: replace
-          args: ["…", ""]
+          args: [" – movietorrent", ""]
         - name: trim
         - name: validfilename
 

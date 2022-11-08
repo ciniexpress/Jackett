@@ -1,28 +1,26 @@
 ---
-id: breizhpeers
-name: BreizhPeers
-description: "BreizhPeers is a FRENCH Private Torrent Tracker for MOVIES / TV"
-language: fr-FR
+id: 3evils-api
+name: 3Evils (API)
+description: "3Evils is a Private site for MOVIES / TV / MUSIC "
+language: en-US
 type: private
 encoding: UTF-8
 links:
-  - https://breizhpeers.tk/
+  - https://3evils.net/
 
 caps:
   categorymappings:
-    - {id: 1, cat: Movies, desc: "Films"}
-    - {id: 2, cat: TV, desc: "Séries"}
-    - {id: 3, cat: TV, desc: "TV"}
-    - {id: 4, cat: TV/Anime, desc: "Animes"}
-    - {id: 5, cat: Audio/Video, desc: "Concerts"}
-    - {id: 10, cat: PC, desc: "Applications"}
-    - {id: 9, cat: Console, desc: "Jeux"}
-    - {id: 6, cat: TV/Sport, desc: "Sport"}
+    - {id: 1, cat: Movies, desc: "Movies"}
+    - {id: 2, cat: TV, desc: "TV"}
+    - {id: 3, cat: Audio, desc: "Music"}
+    - {id: 4, cat: PC/Games, desc: "Game"}
+    - {id: 5, cat: PC/0day, desc: "Application"}
 
   modes:
     search: [q]
     tv-search: [q, season, ep, imdbid, tvdbid, tmdbid]
     movie-search: [q, imdbid, tmdbid]
+    music-search: [q]
 
 settings:
   - name: apikey
@@ -31,30 +29,11 @@ settings:
   - name: info_key
     type: info
     label: About your API key
-    default: "Find or Generate a new API Token by accessing your <a href=\"https://breizhpeers.tk/\" target =_blank>BreizhPeers</a> account <i>My Security</i> page and clicking on the <b>API Token</b> tab."
+    default: "Find or Generate a new API Token by accessing your <a href=\"https://3evils.net/\" target =_blank>3Evils</a> account <i>My Security</i> page and clicking on the <b>API Token</b> tab."
   - name: freeleech
     type: checkbox
     label: Search freeleech only
     default: false
-  - name: vfq
-    type: checkbox
-    label: Replace VFQ with FRENCH in release name
-    default: false
-  - name: multilang
-    type: checkbox
-    label: Replace MULTI by another language in release name
-    default: false
-  - name: multilanguage
-    type: select
-    label: Replace MULTI by this language
-    default: VOSTFR
-    options:
-      FRENCH: FRENCH
-      "MULTI FRENCH": "MULTI FRENCH"
-      ENGLISH: ENGLISH
-      "MULTI ENGLISH": "MULTI ENGLISH"
-      VOSTFR: VOSTFR
-      "MULTI VOSTFR": "MULTI VOSTFR"
   - name: sort
     type: select
     label: Sort requested from site
@@ -113,34 +92,12 @@ search:
   fields:
     category:
       selector: category_id
-    title_original:
-      selector: name
-      filters:
-        - name: replace
-          args: [".", " "]
-    title_vfq:
-      text: "{{ .Result.title_original }}"
-      filters:
-        - name: re_replace
-          args: ["(?i)(\\sVFQ\\s)", " FRENCH "]
-    title_step2:
-      text: "{{ if .Config.vfq }}{{ .Result.title_vfq }}{{ else }}{{ .Result.title_original }}{{ end }}"
-    title_multilang:
-      text: "{{ .Result.title_step2 }}"
-      filters:
-        - name: re_replace
-          args: ["(?i)(\\sMULTI\\s)", " {{ .Config.multilanguage }} "]
     title:
-      text: "{{ if .Config.multilang }}{{ .Result.title_multilang }}{{ else }}{{ .Result.title_step2 }}{{ end }}"
+      selector: name
     details:
       selector: details_link
     download:
       selector: download_link
-    magnet:
-      selector: magnet_link
-      optional: true
-    infohash:
-      selector: info_hash
     poster:
       selector: poster
       filters:
@@ -181,7 +138,10 @@ search:
       case:
         0: 1 # normal
         1: 2 # double
-    minimumseedtime:
-      # 7 days (as seconds = 7 x 24 x 60 x 60)
-      text: 604800
-# json UNIT3D 6.2.1 custom
+# global MR is 0.4 but torrents must be seeded for 7 days regardless of ratio
+#    minimumratio:
+#      text: 0.4
+#    minimumseedtime:
+#      # 2 days (as seconds = 2 x 24 x 60 x 60)
+#      text: 172800
+# json UNIT3D 6.3.0
